@@ -1,0 +1,239 @@
+__version__ = 19
+[misc]
+queue_complete = ""
+https_port = 9090
+folder_rename = 1
+allow_64bit_tools = 1
+rss_rate = 60
+https_key = server.key
+cleanup_list = ,
+cache_limit = ""
+par_option = ""
+web_color = ""
+replace_spaces = 0
+web_color2 = dark
+dirscan_speed = 5
+enable_filejoin = 1
+create_group_folders = 0
+api_key = <%= api_key %>
+no_penalties = 0
+bandwidth_limit = 0
+dirscan_dir = <%= dirscan_dir %>
+disable_api_key = 0
+email_to = <%= email_to %>,
+password = ""
+permissions = ""
+auto_disconnect = 1
+enable_date_sorting = 0
+replace_dots = 0
+movie_sort_extra = -cd%1
+ionice = ""
+enable_unzip = 1
+download_free = ""
+port = 8080
+email_dir = ""
+email_full = 1
+log_dir = logs
+admin_dir = admin
+nzb_backup_dir = ""
+tv_sort_countries = 1
+date_categories = tv,
+ssl_type = v23
+date_sort_string = ""
+schedlines = "0 0 * resume ", "0 7 * pause_all "
+host = 0.0.0.0
+ignore_samples = 1
+enable_tsjoin = 1
+auto_browser = 0
+pause_on_post_processing = 0
+enable_unrar = 1
+email_account = <%= email_account %>
+email_server = <%= email_server %>
+config_lock = 0
+api_warnings = 1
+tv_sort_string = ""
+dirscan_priority = 0
+username = ""
+download_dir = <%= downloads_dir %>
+size_limit = ""
+enable_par_cleanup = 1
+safe_postproc = 1
+cache_dir = cache
+complete_dir = <%= complete_dir %>
+replace_illegal = 1
+par2_multicore = 0
+warned_old_queue = 0
+language = en
+check_new_rel = 1
+enable_https = 0
+no_dupes = 0
+top_only = 1
+quick_check = 1
+movie_sort_string = ""
+email_from = <%= email_from %>
+movie_extra_folder = 0
+dirscan_script = None
+email_endjob = 0
+tv_categories = ,
+unpack_check = 1
+login_realm = SABnzbd
+send_group = 0
+refresh_rate = 0
+movie_categories = movies,
+script_dir = <%= script_dir %>
+email_pwd = <%= email_pwd %>
+ignore_wrong_unrar = 0
+nice = ""
+enable_movie_sorting = 0
+https_cert = server.cert
+web_dir2 = Mobile
+fail_on_crc = 0
+auto_sort = 0
+dirscan_opts = 3
+web_dir = Plush
+queue_complete_pers = 0
+enable_tv_sorting = 0
+folder_max_length = 256
+password_file = ""
+ignore_unrar_dates = 0
+never_repair = 0
+pre_script = None
+sfv_check = 1
+email_rss = 0
+allow_streaming = 0
+pause_on_pwrar = 1
+nzb_key = <%= nzb_key %>
+ampm = 0
+rss_filenames = 0
+[logging]
+max_log_size = 5242880
+log_level = 2
+log_backups = 5
+enable_cherrypy_logging = 0
+log_new = 0
+[newzbin]
+username = ""
+https = 1
+bookmark_rate = 60
+bookmarks = 0
+password = ""
+unbookmark = 1
+[nzbmatrix]
+username = ""
+apikey = ""
+del_bookmark = 1
+[categories]
+[[misc]]
+priority = -100
+pp = ""
+name = misc
+script = Default
+newzbin = Misc
+dir = Misc
+[[resources]]
+priority = -100
+pp = ""
+name = resources
+script = Default
+newzbin = Resources
+dir = Resources
+[[apps]]
+priority = -100
+pp = ""
+name = apps
+script = Default
+newzbin = Apps
+dir = Apps
+[[movies]]
+priority = -100
+pp = ""
+name = movies
+script = Default
+newzbin = Movies
+dir = Movies
+[[consoles]]
+priority = -100
+pp = ""
+name = consoles
+script = Default
+newzbin = Consoles
+dir = Consoles
+[[books]]
+priority = -100
+pp = ""
+name = books
+script = Default
+newzbin = Books
+dir = Books
+[[games]]
+priority = -100
+pp = ""
+name = games
+script = Default
+newzbin = Games
+dir = Games
+[[anime]]
+priority = -100
+pp = ""
+name = anime
+script = Default
+newzbin = Anime
+dir = Anime
+[[music]]
+priority = -100
+pp = ""
+name = music
+script = Default
+newzbin = Music
+dir = Music
+[[pda]]
+priority = -100
+pp = ""
+name = pda
+script = Default
+newzbin = PDA
+dir = PDA
+[[emulation]]
+priority = -100
+pp = ""
+name = emulation
+script = Default
+newzbin = Emulation
+dir = Emulation
+[[unknown]]
+priority = -100
+pp = ""
+name = unknown
+script = sabToSickBeard.py
+newzbin = Unknown
+dir = Unknown
+[[*]]
+priority = 0
+pp = 3
+name = *
+script = None
+newzbin = ""
+dir = ""
+[[tv]]
+priority = -100
+pp = ""
+name = tv
+script = wrapper.sh
+newzbin = TV
+dir = TV
+[servers]
+[[news.astraweb.com]]
+username = <%= server_uname %>
+enable = 1
+name = <%= server_adrr %>
+fillserver = 0
+connections = 20
+ssl = 0
+host = <%= server_adrr %>
+timeout = 30
+password = <%= server_passwd %>
+optional = 0
+port = 119
+retention = 1010
+[growl]
+growl_enable = 1
