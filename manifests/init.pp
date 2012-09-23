@@ -10,7 +10,6 @@ class sabnzbd( $source = 'true' ) {
         command => "/usr/bin/curl -L -o $package $url",
         cwd     => '/usr/local',
         creates => "/usr/local/$package",
-		#onlyif
     }
 	
 	file { "/usr/local/SABnzbd-$version":
@@ -18,13 +17,13 @@ class sabnzbd( $source = 'true' ) {
 		owner => 'root',
 		group => 'root',
 		mode => '0644',
-        require => Exec['unpackage-sabnzbd']
 	}
 	
 	exec { 'unpackage-sabnzbd':
 		command => "/bin/tar xzf /usr/local/$package",
 		cwd     => "/usr/local",
-		creates => "/usr/local/SABnzbd-$version"
+		creates => "/usr/local/SABnzbd-$version",
+        after => File["/usr/local/SABnzbd-$version"]
 	}
 	
 	file { "/usr/local/SABnzbd":
