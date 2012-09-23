@@ -21,6 +21,7 @@ class sabnzbd::config {
 		owner => 'root',
 		group => 'root',
 		mode => '0644',
+        require => Exec['unpackage-sabnzbd']
 	}
 	
 }
