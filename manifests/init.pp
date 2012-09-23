@@ -17,13 +17,13 @@ class sabnzbd( $source = 'true' ) {
 		owner => 'root',
 		group => 'root',
 		mode => '0644',
-        after => File["/usr/local/SABnzbd-$version"]
 	}
 	
 	exec { 'unpackage-sabnzbd':
 		command => "/bin/tar xzf /usr/local/$package",
 		cwd     => "/usr/local",
 		creates => "/usr/local/SABnzbd-$version",
+        before => File["/usr/local/SABnzbd-$version"]
 	}
 	
 	file { "/usr/local/SABnzbd":
