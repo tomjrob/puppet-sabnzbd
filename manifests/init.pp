@@ -18,6 +18,7 @@ class sabnzbd( $source = 'true' ) {
 		owner => 'root',
 		group => 'root',
 		mode => '0644',
+        require => Exec['unpackage-sabnzbd']
 	}
 	
 	exec { 'unpackage-sabnzbd':
