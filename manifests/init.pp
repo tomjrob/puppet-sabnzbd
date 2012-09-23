@@ -21,8 +21,8 @@ class sabnzbd( $source = 'true' ) {
 	}
 	
 	exec { 'unpackage-sabnzbd':
-		command => "/bin/tar xzf /var/tmp/#{$package}"
-		cwd     => "/usr/local"
+		command => "/bin/tar xzf /var/tmp/#{$package}",
+		cwd     => "/usr/local",
 		creates => "/usr/local/SABnzbd-#{$version}"
 	}
 	
