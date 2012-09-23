@@ -1,15 +1,15 @@
 class sabnzbd( $source = 'true' ) {
 	
-	$version = "0.6.10"
+	$version = "0.7.3"
 	$package = "SABnzbd-$version.tar.gz"
-	$url = "http://downloads.sourceforge.net/project/sabnzbdplus/sabnzbdplus/0.7.3/SABnzbd-0.7.3-src.tar.gz"
+	$url = "http://downloads.sourceforge.net/project/sabnzbdplus/sabnzbdplus/$version/SABnzbd-$version-src.tar.gz"
 	
 	include sabnzbd::config
 	
 	exec { 'download-sabnzbd':
         command => "/usr/bin/curl -L -o $package $url",
-        cwd     => '/var/tmp',
-        creates => "/var/tmp/$package",
+        cwd     => '/usr/local',
+        creates => "/usr/local/$package",
 		#onlyif
     }
 	
@@ -21,7 +21,7 @@ class sabnzbd( $source = 'true' ) {
 	}
 	
 	exec { 'unpackage-sabnzbd':
-		command => "/bin/tar xzf /var/tmp/$package",
+		command => "/bin/tar xzf /usr/local/$package",
 		cwd     => "/usr/local",
 		creates => "/usr/local/SABnzbd-$version"
 	}
