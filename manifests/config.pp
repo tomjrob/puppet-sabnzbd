@@ -17,7 +17,7 @@ class sabnzbd::config {
 	$script_dir = "/usr/local/sickbeard/autoProcessTV/"
 	
 	file { "/usr/local/SABnzbd-#{$version}/sabnzbd.ini":
-		content => template('puppet-sabnzbd/sabnzbd.ini.erb')
+		content => template('puppet-sabnzbd/sabnzbd.ini.erb'),
 		owner => 'root',
 		group => 'root',
 		mode => '0644',
