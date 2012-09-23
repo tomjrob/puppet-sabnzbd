@@ -2,7 +2,7 @@ class sabnzbd( $source = 'true' ) {
 	
 	$version = "0.6.10"
 	$package = "SABnzbd-#{version}.tar.gz"
-	$url = ""
+	$url = "http://downloads.sourceforge.net/project/sabnzbdplus/sabnzbdplus/0.7.3/SABnzbd-0.7.3-src.tar.gz"
 	
 	include sabnzbd::config
 	
