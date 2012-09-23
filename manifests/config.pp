@@ -16,7 +16,7 @@ class sabnzbd::config {
 	$downloads_dir = "/usr/local/SABnzbd-downloads/incomplete"
 	$script_dir = "/usr/local/sickbeard/autoProcessTV/"
 	
-	file { "/usr/local/SABnzbd-#{$version}/sabnzbd.ini":
+	file { "/usr/local/SABnzbd-$version/sabnzbd.ini":
 		content => template('sabnzbd/sabnzbd.ini.erb'),
 		owner => 'root',
 		group => 'root',
