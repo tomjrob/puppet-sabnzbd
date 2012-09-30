@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+# sabnzbd			Startup script for SABnzbd Newsreader
+#
+# chkconfig: - 16 84
+# description: SABnzbd is an Open Source Binary Newsreader written in Python.
+# processname: sabnzbd
+#
+### BEGIN INIT INFO
+# Provides: sabnzbd
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: start and stop SABnzbd
+# Description: SABnzbd is an Open Source Binary Newsreader written in Python. 
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Defaults
+PATH=/usr/bin:/usr/local/bin:/usr/local/sbin:/sbin:/bin:/usr/sbin
+PYTHON_LOCATION="/usr/local/bin/python2.7"
+
+# Daemon info
+DAEMON_USER="sabnzbd"
+DAEMON_LOCATION="/usr/local/SABnzbd/SABnzbd.py"
+DAEMON_ARGS="-d"
+DAEMON_URL="http://<%= ipaddress %>/sabnzbd"
+RETVAL=0
+
+start() {
+	echo -n $"Starting SABnzbd: "
+	daemon --user=$DAEMON_USER $PYTHON_LOCATION $DAEMON_LOCATION $DAEMON_ARGS &
+    RETVAL=$?
+    return $RETVAL
+}
+
+stop() {
+	echo -n $"Stopping SABnzbd: "
+	PID=`ps -ef | grep SABnzbd.py | grep -v runuser | grep -v grep | grep -v bash | awk '{print $2}'`
+	echo $PID
+	kill -15 $PID
+	RETVAL=$?
+	return $RETVAL
+}
+
+case "$1" in
+   start)
+        start
+        RETVAL=$?
+        ;;
+   stop)
+        stop
+        RETVAL=$?
+        ;;
+   restart)
+        stop
+        start
+        RETVAL=$?
+        ;;
+   force-reload)
+        stop
+        start
+        RETVAL=$?
+        ;;
+   *)
+   echo "Usage:$0{start|stop|restart|force-reload}"
+   RETVAL=1
+esac
+exit $RETVAL
