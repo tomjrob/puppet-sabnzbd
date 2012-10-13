@@ -18,8 +18,8 @@ class sabnzbd::config {
 	
 	file { "/usr/local/SABnzbd-$version/sabnzbd.ini":
 		content => template('sabnzbd/sabnzbd.ini.erb'),
-		owner => 'root',
-		group => 'root',
+		owner => 'sabnzbd',
+		group => 'sabnzbd',
 		mode => '0644',
         require => Exec['unpackage-sabnzbd']
 	}
