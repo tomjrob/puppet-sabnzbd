@@ -33,6 +33,14 @@ class sabnzbd::config {
         mode => '0644',
     }
 
+	file { '/usr/local/sabnzbd/scripts/autoProcessTV':
+        ensure => directory,
+        owner => 'sabnzbd',
+        group => 'automators',
+        mode => '0644',
+        require => File["/usr/local/sickbeard"]
+    }
+
     file { '/usr/local/sabnzbd/scripts/autoProcessTV/autoProcessTV.py':
         ensure => link,
         target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.py",
