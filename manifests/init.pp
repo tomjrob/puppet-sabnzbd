@@ -1,8 +1,6 @@
-class sabnzbd( $source = 'true' ) {
+class sabnzbd {
 	
-	$version = "0.7.3"
-	$package = "SABnzbd-$version.tar.gz"
-	$url = "http://downloads.sourceforge.net/project/sabnzbdplus/sabnzbdplus/$version/SABnzbd-$version-src.tar.gz"
+	$url = "https://github.com/sabnzbd/sabnzbd.git"
 	
 	include sabnzbd::config
 	
@@ -11,45 +9,31 @@ class sabnzbd( $source = 'true' ) {
         ensure => 'present',
         uid => '600',
         shell => '/bin/bash',
-        gid => '600',
+        gid => '700',
         home => '/home/sabnzbd',
         password => '*',
     }
-    
-    group { "sabnzbd":
-        allowdupe => false,
-        ensure => present,
-        gid => 600,
-        name => 'sabnzbd',
-        before => User["sabnzbd"]
+
+    file { '/home/sabnzbd':
+        ensure => directory,
+        owner => 'sabnzbd',
+        group => 'automators',
+        mode => '0644',
+        recurse => 'true'
     }
 
-	exec { 'download-sabnzbd':
-        command => "/usr/bin/curl -L -o $package $url",
+    exec { 'download-sabnzbd':
+        command => "/usr/bin/git clone $url sabnzbd",
         cwd     => '/usr/local',
-        creates => "/usr/local/$package",
+        creates => "/usr/local/sabnzbd",
     }
 	
-	exec { 'unpackage-sabnzbd':
-		command => "/bin/tar xzf /usr/local/$package",
-		cwd     => "/usr/local",
-		creates => "/usr/local/SABnzbd-$version",
-		user    => "sickbeard",
-        group   => "sickbeard",
-        before => File["/usr/local/SABnzbd-$version"]
-	}
-	
-	file { "/usr/local/SABnzbd-$version":
+	file { "/usr/local/sabnzbd":
 		ensure => directory,
 		owner => 'sabnzbd',
-		group => 'sabnzbd',
+		group => 'automators',
+		mode => '0644',
 		recurse => 'true',
-		require => Exec["unpackage-sabnzbd"]
-	}
-	
-	file { "/usr/local/SABnzbd":
-	    ensure => link,
-        target => "/usr/local/SABnzbd-$version",
 	}
 	
 	file { "/etc/init.d/sabnzbd":
