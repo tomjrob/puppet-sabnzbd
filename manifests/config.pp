@@ -21,7 +21,7 @@ class sabnzbd::config {
         owner => 'sabnzbd',
         group => 'sabnzbd',
         mode => '0644',
-        require => Exec['unpackage-sabnzbd']
+        require => Exec['download-sabnzbd']
     }
     
     $script_dir = "/usr/local/sabnzbd/scripts"
