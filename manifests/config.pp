@@ -14,6 +14,7 @@ class sabnzbd::config {
     $dir_scan_dir = "/usr/local/sabnzbd-downloads/listen"
     $complete_dir = "/usr/local/sabnzbd-downloads/complete"
     $downloads_dir = "/usr/local/sabnzbd-downloads/incomplete"
+    $scripts_dir = "/usr/local/sabnzbd/scripts"
     
     file { "/usr/local/sabnzbd/sabnzbd.ini":
         content => template('sabnzbd/sabnzbd.ini.erb'),
