@@ -35,17 +35,20 @@ class sabnzbd::config {
 
     file { '/usr/local/sabnzbd/scripts/autoProcessTV/autoProcessTV.py':
         ensure => link,
-        target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.py"
+        target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.py",
+        require => File["/usr/local/sickbeard/autoProcessTV"]
     }
     
     file { '/usr/local/sabnzbd/scripts/autoProcessTV/autoProcessTV.cfg':
         ensure => link,
-        target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.cfg"
+        target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.cfg",
+        require => File["/usr/local/sickbeard/autoProcessTV"]
     }
     
     file { '/usr/local/sabnzbd/scripts/autoProcessTV/sabToSickBeard.py':
         ensure => link,
-        target => "/usr/local/sickbeard/autoProcessTV/sabToSickBeard.py"
+        target => "/usr/local/sickbeard/autoProcessTV/sabToSickBeard.py",
+        require => File["/usr/local/sickbeard/autoProcessTV"]
     }
     
 }
