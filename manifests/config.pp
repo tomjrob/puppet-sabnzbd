@@ -1,29 +1,50 @@
 class sabnzbd::config {
-	
-	$api_key = extlookup("api_key")
-	$email_to = extlookup("email")
-	$email_account = extlookup("email")
-	$email_server = extlookup("email_server")
-	$email_from = extlookup("email")
-	$email_passwd = extlookup("email_passwd")
-	$nzb_key = extlookup("nzb_key")
-	$server_uname = extlookup("nzb_server_uname")
-	$server_addr = extlookup("nzb_server_addr")
-	$server_passwd = extlookup("nzb_server_passwd")
-	
-	$dir_scan_dir = "/usr/local/SABnzbd-downloads/listen"
-	$complete_dir = "/usr/local/SABnzbd-downloads/complete"
-	$downloads_dir = "/usr/local/SABnzbd-downloads/incomplete"
-	
-	#TODO create this dir + links
-	$script_dir = "/usr/local/SABnzbd/scripts"
-	
-	file { "/usr/local/SABnzbd-$version/sabnzbd.ini":
-		content => template('sabnzbd/sabnzbd.ini.erb'),
-		owner => 'sabnzbd',
-		group => 'sabnzbd',
-		mode => '0644',
+    
+    $api_key = extlookup("api_key")
+    $email_to = extlookup("email")
+    $email_account = extlookup("email")
+    $email_server = extlookup("email_server")
+    $email_from = extlookup("email")
+    $email_passwd = extlookup("email_passwd")
+    $nzb_key = extlookup("nzb_key")
+    $server_uname = extlookup("nzb_server_uname")
+    $server_addr = extlookup("nzb_server_addr")
+    $server_passwd = extlookup("nzb_server_passwd")
+    
+    $dir_scan_dir = "/usr/local/sabnzbd-downloads/listen"
+    $complete_dir = "/usr/local/sabnzbd-downloads/complete"
+    $downloads_dir = "/usr/local/sabnzbd-downloads/incomplete"
+    
+    file { "/usr/local/sabnzbd/sabnzbd.ini":
+        content => template('sabnzbd/sabnzbd.ini.erb'),
+        owner => 'sabnzbd',
+        group => 'sabnzbd',
+        mode => '0644',
         require => Exec['unpackage-sabnzbd']
-	}
-	
+    }
+    
+    $script_dir = "/usr/local/sabnzbd/scripts"
+    
+    file { '/usr/local/sabnzbd/scripts':
+        ensure => directory,
+        owner => 'sabnzbd',
+        group => 'automators',
+        mode => '0644',
+    }
+
+    file { '/usr/local/sabnzbd/scripts/autoProcessTV/autoProcessTV.py':
+        ensure => link,
+        target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.py"
+    }
+    
+    file { '/usr/local/sabnzbd/scripts/autoProcessTV/autoProcessTV.cfg':
+        ensure => link,
+        target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.cfg"
+    }
+    
+    file { '/usr/local/sabnzbd/scripts/autoProcessTV/sabToSickBeard.py':
+        ensure => link,
+        target => "/usr/local/sickbeard/autoProcessTV/sabToSickBeard.py"
+    }
+    
 }
