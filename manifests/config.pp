@@ -31,32 +31,25 @@ class sabnzbd::config {
         owner => 'sabnzbd',
         group => 'automators',
         mode => '0644',
-    }
-
-	file { '/usr/local/sabnzbd/scripts/autoProcessTV':
-        ensure => directory,
-        owner => 'sabnzbd',
-        group => 'automators',
-        mode => '0644',
         require => File["/usr/local/sickbeard"]
     }
 
-    file { '/usr/local/sabnzbd/scripts/autoProcessTV/autoProcessTV.py':
+    file { '/usr/local/sabnzbd/scripts/autoProcessTV.py':
         ensure => link,
         target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.py",
-        require => File["/usr/local/sabnzbd/scripts/autoProcessTV"]
+        require => File["/usr/local/sabnzbd/scripts"]
     }
     
-    file { '/usr/local/sabnzbd/scripts/autoProcessTV/autoProcessTV.cfg':
+    file { '/usr/local/sabnzbd/scripts/autoProcessTV.cfg':
         ensure => link,
         target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.cfg",
-        require => File["/usr/local/sabnzbd/scripts/autoProcessTV"]
+        require => File["/usr/local/sabnzbd/scripts"]
     }
     
-    file { '/usr/local/sabnzbd/scripts/autoProcessTV/sabToSickBeard.py':
+    file { '/usr/local/sabnzbd/scripts/sabToSickBeard.py':
         ensure => link,
         target => "/usr/local/sickbeard/autoProcessTV/sabToSickBeard.py",
-        require => File["/usr/local/sabnzbd/scripts/autoProcessTV"]
+        require => File["/usr/local/sabnzbd/scripts"]
     }
     
 }
