@@ -1,15 +1,15 @@
 class sabnzbd::config {
     
-    $api_key = extlookup("api_key")
-    $email_to = extlookup("email")
-    $email_account = extlookup("email")
-    $email_server = extlookup("email_server")
-    $email_from = extlookup("email")
-    $email_passwd = extlookup("email_passwd")
-    $nzb_key = extlookup("nzb_key")
-    $server_uname = extlookup("nzb_server_uname")
-    $server_addr = extlookup("nzb_server_addr")
-    $server_passwd = extlookup("nzb_server_passwd")
+    $api_key = hiera('sabnzbd_apikey')
+    $email_to = hiera('email')
+    $email_account = hiera('email')
+    $email_server = hiera('email_server')
+    $email_from = hiera('email')
+    $email_passwd = hiera('email_passwd')
+    $nzb_key = hiera('sabnzbd_nzbkey')
+    $server_uname = hiera('nzb_server_uname')
+    $server_addr = hiera('nzb_server_addr')
+    $server_passwd = hiera('nzb_server_passwd')
     
     $dir_scan_dir = "/usr/local/sabnzbd-downloads/listen"
     $complete_dir = "/usr/local/sabnzbd-downloads/complete"
