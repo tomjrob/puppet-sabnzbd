@@ -1,55 +1,58 @@
 class sabnzbd::config {
-    
-    $api_key = hiera('sabnzbd_apikey')
-    $email_to = hiera('email')
-    $email_account = hiera('email')
-    $email_server = hiera('email_server')
-    $email_from = hiera('email')
-    $email_passwd = hiera('email_passwd')
-    $nzb_key = hiera('sabnzbd_nzbkey')
-    $server_uname = hiera('nzb_server_uname')
-    $server_addr = hiera('nzb_server_addr')
-    $server_passwd = hiera('nzb_server_passwd')
-    
-    $dir_scan_dir = "/usr/local/sabnzbd-downloads/listen"
-    $complete_dir = "/usr/local/sabnzbd-downloads/complete"
-    $downloads_dir = "/usr/local/sabnzbd-downloads/incomplete"
-    $scripts_dir = "/usr/local/sabnzbd/scripts"
+	
+	if $logrotate {
+	    logrotate::rule { 'sabnzbd':
+	        path          => "$log_dir/*",
+	        rotate        => 5,
+	        size          => '100k',
+	        sharedscripts => true,
+	        postrotate    => '/usr/bin/supervisorctl restart sabnzbd',
+	    }   
+	}
+	    
+	file { "$base_dir/sabnzbd/config/":
+		ensure => directory,
+	    owner => 'sabnzbd',
+	    group => 'sabnzbd',
+	}
     
     file { "/usr/local/sabnzbd/sabnzbd.ini":
         content => template('sabnzbd/sabnzbd.ini.erb'),
         owner => 'sabnzbd',
         group => 'sabnzbd',
         mode => '0644',
-        require => Exec['download-sabnzbd']
+        require => File["$base_dir/sabnzbd/config/"],
+        notify => Service['supervisor::sabnzbd'],
     }
     
-    $script_dir = "/usr/local/sabnzbd/scripts"
-    
-    file { '/usr/local/sabnzbd/scripts':
+    file { "$cache_dir":
         ensure => directory,
         owner => 'sabnzbd',
-        group => 'automators',
+        group => 'sabnzbd',
         mode => '0644',
-        require => File["/usr/local/sickbeard"]
+    }
+    file { "$scripts_dir":
+        ensure => directory,
+        owner => 'sabnzbd',
+        group => 'sabnzbd',
+        mode => '0644',
     }
 
-    file { '/usr/local/sabnzbd/scripts/autoProcessTV.py':
+    file { "$scripts_dir/autoProcessTV.py":
         ensure => link,
-        target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.py",
-        require => File["/usr/local/sabnzbd/scripts"]
+        target => "$base_dir/sickbeard/src/autoProcessTV/autoProcessTV.py",
+        require => Exec['download-sickbeard'],
+    }
+
+    file { "$scripts_dir/autoProcessTV.cfg":
+        ensure => link,
+        target => "$base_dir/sickbeard/config/autoProcessTV.cfg",
+        require => File["$scripts_dir","$base_dir/sickbeard/config/autoProcessTV.cfg"]
     }
     
-    file { '/usr/local/sabnzbd/scripts/autoProcessTV.cfg':
+    file { "$scripts_dir/sabToSickBeard.py":
         ensure => link,
-        target => "/usr/local/sickbeard/autoProcessTV/autoProcessTV.cfg",
-        require => File["/usr/local/sabnzbd/scripts"]
-    }
-    
-    file { '/usr/local/sabnzbd/scripts/sabToSickBeard.py':
-        ensure => link,
-        target => "/usr/local/sickbeard/autoProcessTV/sabToSickBeard.py",
-        require => File["/usr/local/sabnzbd/scripts"]
-    }
-    
+        target => "$base_dir/sickbeard/src/autoProcessTV/sabToSickBeard.py",
+        require => Exec['download-sickbeard'],
+    }    
 }
