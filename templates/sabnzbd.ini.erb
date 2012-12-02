@@ -18,7 +18,9 @@ create_group_folders = 0
 api_key = <%= api_key %>
 no_penalties = 0
 bandwidth_limit = 0
+<% if @dir_scan_dir %>
 dirscan_dir = <%= dir_scan_dir %>
+<% end %>
 disable_api_key = 0
 email_to = <%= email_to %>,
 password = ""
@@ -33,8 +35,8 @@ download_free = ""
 port = 8080
 email_dir = ""
 email_full = 1
-log_dir = logs
-admin_dir = admin
+log_dir = <%= log_dir %>
+admin_dir = <%= admin_dir %>
 nzb_backup_dir = ""
 tv_sort_countries = 1
 date_categories = tv,
@@ -58,14 +60,14 @@ download_dir = <%= downloads_dir %>
 size_limit = ""
 enable_par_cleanup = 1
 safe_postproc = 1
-cache_dir = cache
+cache_dir = <%= cache_dir %>
 complete_dir = <%= complete_dir %>
 replace_illegal = 1
 par2_multicore = 0
 warned_old_queue = 0
 language = en
 check_new_rel = 1
-enable_https = 0
+enable_https = <%= ssl %>
 no_dupes = 0
 top_only = 1
 quick_check = 1
@@ -118,10 +120,12 @@ bookmark_rate = 60
 bookmarks = 0
 password = ""
 unbookmark = 1
+<% if @nzbmatrix_username %>
 [nzbmatrix]
-username = ""
-apikey = ""
+username = "<%= nzbmatrix_username %>"
+apikey = "<%= nzbmatrix_apikey %>"
 del_bookmark = 1
+<% end %>
 [categories]
 [[misc]]
 priority = -100
@@ -149,8 +153,8 @@ priority = -100
 pp = ""
 name = movies
 script = Default
-newzbin = Movies
-dir = Movies
+newzbin = Movies > SD
+dir = <%= complete_movie_download_dir %> 
 [[consoles]]
 priority = -100
 pp = ""
@@ -184,8 +188,8 @@ priority = -100
 pp = ""
 name = music
 script = Default
-newzbin = Music
-dir = Music
+newzbin = Music*
+dir = <%= complete_music_download_dir %>
 [[pda]]
 priority = -100
 pp = ""
@@ -220,20 +224,20 @@ pp = ""
 name = tv
 script = sabToSickBeard.py
 newzbin = TV
-dir = TV
+dir = <%= complete_tv_download_dir %>
 [servers]
-[[news.astraweb.com]]
-username = <%= server_uname %>
+[[<%= nzb_server %>]]
+username = <%= nzb_server_username %>
 enable = 1
-name = <%= server_addr %>
+name = <%= nzb_server %>
 fillserver = 0
-connections = 20
-ssl = 0
-host = <%= server_addr %>
+connections = <%= nzb_server_maxconnections %>
+ssl = <%= nzb_server_ssl %>
+host = <%= nzb_server %>
 timeout = 30
-password = <%= server_passwd %>
+password = <%= nzb_server_passwd %>
 optional = 0
-port = 119
-retention = 1010
+port = <%= nzb_server_port %>
+retention = <%= nzb_server_retention %>
 [growl]
 growl_enable = 1
