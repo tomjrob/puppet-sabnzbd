@@ -1,6 +1,6 @@
 class sabnzbd::config {
 	
-	if $logrotate {
+	if defined($logrotate) {
 	    logrotate::rule { 'sabnzbd':
 	        path          => "$log_dir/*",
 	        rotate        => 5,

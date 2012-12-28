@@ -8,15 +8,15 @@ class sabnzbd inherits sabnzbd::params {
 	
 	package {
 	   'unrar':
-	       ensure => present;
+	       ensure => 'installed';
 	   'unzip':
-	       ensure => present;
+	       ensure => 'installed';
 	   'p7zip':
-	       ensure => present;
+	       ensure => 'installed';
 	    'par2':
-	        ensure => present;
+	        ensure => 'installed';
 	    'python-yenc':
-	        ensure => present;
+	        ensure => 'installed';
 	}
 	
 	user { 'sabnzbd':
@@ -69,16 +69,18 @@ class sabnzbd inherits sabnzbd::params {
 	    require => Exec['venv-create-sabnzbd'];
 	}
 	
-	supervisor::service {
-	    'sabnzbd':
-	        ensure => present,
-	        enable => true,
-	        stdout_logfile => "$base_dir/sabnzbd/log/supervisor.log",
-	        stderr_logfile => "$base_dir/sabnzbd/log/supervisor.log",
-	        command => "$base_dir/sabnzbd/venv/bin/python $base_dir/sabnzbd/src/SABnzbd.py -f $base_dir/sabnzbd/config/sabnzbd.ini",
-	        user => 'sabnzbd',
-	        group => 'sabnzbd',
-	        directory => "$base_dir/sabnzbd/src/",
-	        require => Exec['download-sabnzbd'],
-	}	
+	if defined(Class['supervisor::service']) {
+		supervisor::service {
+	    	'sabnzbd':
+	        	ensure => present,
+	        	enable => true,
+	        	stdout_logfile => "$base_dir/sabnzbd/log/supervisor.log",
+	        	stderr_logfile => "$base_dir/sabnzbd/log/supervisor.log",
+	        	command => "$base_dir/sabnzbd/venv/bin/python $base_dir/sabnzbd/src/SABnzbd.py -f $base_dir/sabnzbd/config/sabnzbd.ini",
+	        	user => 'sabnzbd',
+	        	group => 'sabnzbd',
+	        	directory => "$base_dir/sabnzbd/src/",
+	        	require => Exec['download-sabnzbd'],
+		}	
+	}
 }
