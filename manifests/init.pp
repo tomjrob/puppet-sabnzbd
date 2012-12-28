@@ -7,10 +7,12 @@ class sabnzbd inherits sabnzbd::params {
 	include supervisor
 	
 	package {
-	    'unrar':
-	        ensure => present;
-	   #'unzip':
-	   #    ensure => present;
+	   'unrar':
+	       ensure => present;
+	   'unzip':
+	       ensure => present;
+	   'p7zip':
+	       ensure => present;
 	    'par2':
 	        ensure => present;
 	    'python-yenc':
