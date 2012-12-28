@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'sabnzbd', :type => :class do
   let(:pre_condition) { 
-    [ "class git {}",
-      "class python::virtualenv {}",
-      "class supervisor {}",
-    ] }
+    'class git {}
+     class python::virtualenv {}
+     class supervisor {}'
+  }
   it { should include_class('sabnzbd::config') }
   it { should include_class('sabnzbd::proxy') }
   it { should include_class('sabnzbd::params') }
