@@ -1,5 +1,8 @@
 Puppet module for installing [sabnzbd](http://sabnzbd.org/).
 
+[![BuildStatus](https://api.travis-ci.org/liamjbennett/puppet-sabnzbd.png)](https://travis-ci.org/liamjbennett/puppet-sabnzbd)
+[![Dependency Status](https://gemnasium.com/liamjbennett/puppet-sabnzbd.png)](https://gemnasium.com/liamjbennett/puppet-sabnzbd)
+
 ## Usage
 
 The module includes a single class:
