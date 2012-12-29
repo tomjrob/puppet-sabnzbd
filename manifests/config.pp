@@ -1,58 +1,62 @@
+#
+#
+#
 class sabnzbd::config {
-	
-	if defined($logrotate) {
-	    logrotate::rule { 'sabnzbd':
-	        path          => "$log_dir/*",
-	        rotate        => 5,
-	        size          => '100k',
-	        sharedscripts => true,
-	        postrotate    => '/usr/bin/supervisorctl restart sabnzbd',
-	    }   
-	}
-	    
-	file { "$base_dir/sabnzbd/config/":
-		ensure => directory,
-	    owner => 'sabnzbd',
-	    group => 'sabnzbd',
-	}
-    
-    file { "/usr/local/sabnzbd/sabnzbd.ini":
+    include sabnzbd::params
+
+    if defined(Class['logrotate::base']) and $sabnzbd::params::logrotate {
+        logrotate::rule { 'sabnzbd':
+            path          => "${sabnzbd::params::log_dir}/*",
+            rotate        => 5,
+            size          => '100k',
+            sharedscripts => true,
+            postrotate    => '/usr/bin/supervisorctl restart sabnzbd',
+        }
+    }
+
+    file { "${sabnzbd::params::base_dir}/sabnzbd/config/":
+        ensure => directory,
+        owner  => 'sabnzbd',
+        group  => 'sabnzbd',
+    }
+
+    file { '/usr/local/sabnzbd/sabnzbd.ini':
         content => template('sabnzbd/sabnzbd.ini.erb'),
-        owner => 'sabnzbd',
-        group => 'sabnzbd',
-        mode => '0644',
-        require => File["$base_dir/sabnzbd/config/"],
-        notify => Service['supervisor::sabnzbd'],
-    }
-    
-    file { "$cache_dir":
-        ensure => directory,
-        owner => 'sabnzbd',
-        group => 'sabnzbd',
-        mode => '0644',
-    }
-    file { "$scripts_dir":
-        ensure => directory,
-        owner => 'sabnzbd',
-        group => 'sabnzbd',
-        mode => '0644',
+        owner   => 'sabnzbd',
+        group   => 'sabnzbd',
+        mode    => '0644',
+        require => File["${sabnzbd::params::base_dir}/sabnzbd/config/"],
+        notify  => Service['supervisor::sabnzbd'],
     }
 
-    file { "$scripts_dir/autoProcessTV.py":
-        ensure => link,
-        target => "$base_dir/sickbeard/src/autoProcessTV/autoProcessTV.py",
+    file { "${sabnzbd::params::cache_dir}/":
+        ensure => directory,
+        owner  => 'sabnzbd',
+        group  => 'sabnzbd',
+        mode   => '0644',
+    }
+    file { "${sabnzbd::params::scripts_dir}/":
+        ensure => directory,
+        owner  => 'sabnzbd',
+        group  => 'sabnzbd',
+        mode   => '0644',
+    }
+
+    file { "${sabnzbd::params::scripts_dir}/autoProcessTV.py":
+        ensure  => link,
+        target  => "${sabnzbd::params::base_dir}/sickbeard/src/autoProcessTV/autoProcessTV.py",
         require => Exec['download-sickbeard'],
     }
 
-    file { "$scripts_dir/autoProcessTV.cfg":
-        ensure => link,
-        target => "$base_dir/sickbeard/config/autoProcessTV.cfg",
-        require => File["$scripts_dir","$base_dir/sickbeard/config/autoProcessTV.cfg"]
+    file { "${sabnzbd::params::scripts_dir}/autoProcessTV.cfg":
+        ensure  => link,
+        target  => "${sabnzbd::params::base_dir}/sickbeard/config/autoProcessTV.cfg",
+        require => File["${sabnzbd::params::scripts_dir}/","${sabnzbd::params::base_dir}/sickbeard/config/autoProcessTV.cfg"]
     }
-    
-    file { "$scripts_dir/sabToSickBeard.py":
-        ensure => link,
-        target => "$base_dir/sickbeard/src/autoProcessTV/sabToSickBeard.py",
+
+    file { "${sabnzbd::params::scripts_dir}/sabToSickBeard.py":
+        ensure  => link,
+        target  => "${sabnzbd::params::base_dir}/sickbeard/src/autoProcessTV/sabToSickBeard.py",
         require => Exec['download-sickbeard'],
-    }    
+    }
 }
