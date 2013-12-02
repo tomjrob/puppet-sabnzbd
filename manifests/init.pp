@@ -60,7 +60,6 @@ class sabnzbd {
     
     supervisor::service { 'sabnzbd':
         ensure         => present,
-        enable         => true,
         stdout_logfile => "${sabnzbd::params::base_dir}/sabnzbd/log/supervisor.log",
         stderr_logfile => "${sabnzbd::params::base_dir}/sabnzbd/log/supervisor.log",
         command        => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/python ${sabnzbd::params::base_dir}/sabnzbd/src/SABnzbd.py -f ${sabnzbd::params::base_dir}/sabnzbd/config/sabnzbd.ini",
