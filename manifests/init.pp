@@ -58,14 +58,13 @@ class sabnzbd {
     }
 
     
-    supervisor::service { 'sabnzbd':
+    supervisord::program { 'sabnzbd':
+        command        => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/python ${sabnzbd::params::base_dir}/sabnzbd/src/SABnzbd.py -f ${sabnzbd::params::base_dir}/sabnzbd/config/sabnzbd.ini",
         ensure         => present,
         stdout_logfile => "${sabnzbd::params::base_dir}/sabnzbd/log/supervisor.log",
         stderr_logfile => "${sabnzbd::params::base_dir}/sabnzbd/log/supervisor.log",
-        command        => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/python ${sabnzbd::params::base_dir}/sabnzbd/src/SABnzbd.py -f ${sabnzbd::params::base_dir}/sabnzbd/config/sabnzbd.ini",
         user           => 'sabnzbd',
-        group          => 'sabnzbd',
         directory      => "${sabnzbd::params::base_dir}/sabnzbd/src/",
         require        => Exec['download-sabnzbd'],
-    }
+     }
 }
