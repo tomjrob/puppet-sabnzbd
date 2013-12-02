@@ -1,0 +1,30 @@
+{
+  "name": "tomo0-sabnzbd",
+  "version": "0.0.1",
+  "summary": "Module for installing sabnzbd newsreader",
+  "author": "Tom Robinson",
+  "description": "Install sabnzd, configure your indexes and start downloading nzbs",
+  "dependencies": [
+    {
+      "name": "puppetlabs/git",
+      "version_requirement": "0.0.3"
+    },
+    {
+      "name": "stankevich/python",
+      "version_requirement": "1.2.0"
+    },
+    {
+      "name": "guilhermef/supervisor",
+      "version_requirement": "0.0.5"
+    },
+    {
+      "name": "rodjek/logrotate",
+      "version_requirement": "1.1.1"
+    }
+  ],
+  "types": [],
+  "checksums": {},
+  "source": "https://github.com/tomo0/puppet-sabnzbd.git",
+  "project_page": "",
+  "license": "Apache License, Version 2.0\u003e0.0.0"
+}

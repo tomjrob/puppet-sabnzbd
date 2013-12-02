@@ -5,9 +5,7 @@ class sabnzbd {
 
     include sabnzbd::params
     include sabnzbd::config
-    include sabnzbd::proxy
     include git
-    include python::virtualenv
     include supervisor
 
     $package_deps = ['unrar','unzip','p7zip','par2','python-yenc']
@@ -31,14 +29,13 @@ class sabnzbd {
         recurse => true
     }
 
-    exec { 'venv-create-sabnzbd':
-        command => "virtualenv ${sabnzbd::params::venv_dir}",
-        cwd     => "${sabnzbd::params::base_dir}/sabnzbd",
-        creates => "${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}/bin/activate",
-        path    => '/usr/bin/',
-        user    => 'sabnzbd',
-        require => [Class['python::virtualenv'], Package['python-yenc']];
-    }
+		python::virtualenv { '${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}':
+		    ensure       => present,
+		    owner        => 'sabnzbd',
+		    group        => 'sabnzbd',
+        require      => [Package['python-yenc'],File['$sabnzbd::params::base_dir/sabnzbd']]
+		  }
+
     exec { 'download-sabnzbd':
         command => "/usr/bin/git clone ${sabnzbd::params::url} src",
         cwd     => "${sabnzbd::params::base_dir}/sabnzbd",
@@ -52,7 +49,7 @@ class sabnzbd {
         creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/lib/python2.7/site-packages/OpenSSL",
         path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
         user    => 'sabnzbd',
-        require => Exec['venv-create-sabnzbd'];
+        require => Python::Virtualenv['${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}'];
     }
     exec { 'install-cheetah-sabnzbd':
         command => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/pip install cheetah",
@@ -60,7 +57,7 @@ class sabnzbd {
         creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/cheetah",
         path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
         user    => 'sabnzbd',
-        require => Exec['venv-create-sabnzbd'];
+        require => Python::Virtualenv['${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}'];
     }
 
     if defined(Class['supervisor::service']) {
