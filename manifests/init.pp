@@ -2,20 +2,19 @@ class sabnzbd {
 
     include sabnzbd::params
     include sabnzbd::config
+    include git
 
     $package_deps = ['unrar','unzip','p7zip','par2','python-yenc']
-    package { "${sabnzbd::package_deps}":
+    package { $package_deps:
         ensure => 'installed'
     }
 
     user { 'sabnzbd':
         ensure    => 'present',
         allowdupe => false,
-        uid       => '600',
         shell     => '/bin/bash',
-        gid       => '700',
         home      => "${sabnzbd::params::base_dir}/sabnzbd",
-        password  => '*',
+        password  => 'sabnzbd',
     }
 
     file { "${sabnzbd::params::base_dir}/sabnzbd":
@@ -46,7 +45,7 @@ class sabnzbd {
         creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/lib/python2.7/site-packages/OpenSSL",
         path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
         user    => 'sabnzbd',
-        require => Python::Virtualenv['${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}'];
+        require => Python::Virtualenv["${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"];
     }
     exec { 'install-cheetah-sabnzbd':
         command => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/pip install cheetah",
@@ -54,17 +53,18 @@ class sabnzbd {
         creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/cheetah",
         path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
         user    => 'sabnzbd',
-        require => Python::Virtualenv['${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}'];
+        require => Python::Virtualenv["${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"];
     }
-
     
-    supervisord::program { 'sabnzbd':
-        command        => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/python ${sabnzbd::params::base_dir}/sabnzbd/src/SABnzbd.py -f ${sabnzbd::params::base_dir}/sabnzbd/config/sabnzbd.ini",
+    supervisor::service { 'sabnzbd':
         ensure         => present,
+        enable         => true,
         stdout_logfile => "${sabnzbd::params::base_dir}/sabnzbd/log/supervisor.log",
         stderr_logfile => "${sabnzbd::params::base_dir}/sabnzbd/log/supervisor.log",
+        command        => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/python ${sabnzbd::params::base_dir}/sabnzbd/src/SABnzbd.py -f ${sabnzbd::params::base_dir}/sabnzbd/config/sabnzbd.ini",
         user           => 'sabnzbd',
+        group          => 'sabnzbd',
         directory      => "${sabnzbd::params::base_dir}/sabnzbd/src/",
         require        => Exec['download-sabnzbd'],
-     }
+    }
 }

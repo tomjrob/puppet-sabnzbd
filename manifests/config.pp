@@ -42,21 +42,21 @@ class sabnzbd::config {
         mode   => '0644',
     }
 
-    file { "${sabnzbd::params::scripts_dir}/autoProcessTV.py":
-        ensure  => link,
-        target  => "${sabnzbd::params::base_dir}/sickbeard/src/autoProcessTV/autoProcessTV.py",
-        require => Exec['download-sickbeard'],
-    }
-
-    file { "${sabnzbd::params::scripts_dir}/autoProcessTV.cfg":
-        ensure  => link,
-        target  => "${sabnzbd::params::base_dir}/sickbeard/config/autoProcessTV.cfg",
-        require => File["${sabnzbd::params::scripts_dir}/","${sabnzbd::params::base_dir}/sickbeard/config/autoProcessTV.cfg"]
-    }
-
-    file { "${sabnzbd::params::scripts_dir}/sabToSickBeard.py":
-        ensure  => link,
-        target  => "${sabnzbd::params::base_dir}/sickbeard/src/autoProcessTV/sabToSickBeard.py",
-        require => Exec['download-sickbeard'],
-    }
+#    file { "${sabnzbd::params::scripts_dir}/autoProcessTV.py":
+#        ensure  => link,
+#        target  => "${sabnzbd::params::base_dir}/sickbeard/src/autoProcessTV/autoProcessTV.py",
+#        require => Exec['download-sickbeard'],
+#    }
+#
+#    file { "${sabnzbd::params::scripts_dir}/autoProcessTV.cfg":
+#        ensure  => link,
+#        target  => "${sabnzbd::params::base_dir}/sickbeard/config/autoProcessTV.cfg",
+#        require => File["${sabnzbd::params::scripts_dir}/","${sabnzbd::params::base_dir}/sickbeard/config/autoProcessTV.cfg"]
+#    }
+#
+#    file { "${sabnzbd::params::scripts_dir}/sabToSickBeard.py":
+#        ensure  => link,
+#        target  => "${sabnzbd::params::base_dir}/sickbeard/src/autoProcessTV/sabToSickBeard.py",
+#        require => Exec['download-sickbeard'],
+#    }
 }
