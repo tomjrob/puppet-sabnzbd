@@ -33,7 +33,6 @@ class sabnzbd {
     
     python::virtualenv { "${venv}":
         ensure       => present,
-        systempkgs   => true,
         owner        => 'sabnzbd',
         group        => 'sabnzbd',
         require      => File["${sabnzbd::params::base_dir}/sabnzbd"]
