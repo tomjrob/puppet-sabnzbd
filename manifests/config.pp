@@ -41,4 +41,10 @@ class sabnzbd::config {
         group  => 'sabnzbd',
         mode   => '0644',
     }
+    file { "${sabnzbd::params::log_dir}/":
+    ensure => directory,
+    owner  => 'sabnzbd',
+    group  => 'sabnzbd',
+    mode   => '0644',
+    }
 }

@@ -4,213 +4,179 @@ queue_complete = ""
 https_port = 9090
 folder_rename = 1
 allow_64bit_tools = 1
+password_file = ""
 rss_rate = 60
 https_key = server.key
 cleanup_list = ,
 cache_limit = ""
+ignore_unrar_dates = 0
 par_option = ""
-web_color = ""
+web_color = gold
 replace_spaces = 0
-web_color2 = dark
+web_color2 = light
 dirscan_speed = 5
 enable_filejoin = 1
 create_group_folders = 0
-api_key = <%= scope.lookupvar('sabnzbd::params::api_key') %>
+api_key = 
+never_repair = 0
 no_penalties = 0
 bandwidth_limit = 0
-<% if scope.lookupvar('sabnzbd::params::dir_scan_dir') %>
-dirscan_dir = <%= scope.lookupvar('sabnzbd::params::dir_scan_dir') %>
-<% end %>
+dirscan_dir = ""
 disable_api_key = 0
-email_to = <%= scope.lookupvar('sabnzbd::params::email_to') %>,
+email_to = ,
+rss_filenames = 0
 password = ""
-permissions = ""
+permissions = 777
 auto_disconnect = 1
+use_pickle = 0
 enable_date_sorting = 0
 replace_dots = 0
 movie_sort_extra = -cd%1
 ionice = ""
 enable_unzip = 1
-download_free = ""
-port = 8080
+download_free = 10GB
+port = 8081
 email_dir = ""
-email_full = 1
-log_dir = <%= scope.lookupvar('sabnzbd::params::log_dir') %>
-admin_dir = <%= scope.lookupvar('sabnzbd::params::admin_dir') %>
-nzb_backup_dir = ""
+pre_script = None
+email_full = 0
+log_dir = logs
+admin_dir = admin
+nzb_backup_dir = nzbs
 tv_sort_countries = 1
 date_categories = tv,
 ssl_type = v23
+sfv_check = 1
 date_sort_string = ""
-schedlines = "0 0 * resume ", "0 7 * pause_all "
+schedlines = "0 0 7 remove_failed ",
 host = 0.0.0.0
 ignore_samples = 1
 enable_tsjoin = 1
 auto_browser = 0
 pause_on_post_processing = 0
 enable_unrar = 1
-email_account = <%= scope.lookupvar('sabnzbd::params::email_account') %>
-email_server = <%= scope.lookupvar('sabnzbd::params::email_server') %>
+email_rss = 0
+email_account = ""
+email_server = ""
+allow_streaming = 0
 config_lock = 0
 api_warnings = 1
 tv_sort_string = ""
-dirscan_priority = 0
 username = ""
-download_dir = <%= scope.lookupvar('sabnzbd::params::downloads_dir') %>
+unpack_check = 1
+download_dir = 
 size_limit = ""
 enable_par_cleanup = 1
-safe_postproc = 1
-cache_dir = <%= scope.lookupvar('sabnzbd::params::cache_dir') %>
-complete_dir = <%= scope.lookupvar('sabnzbd::params::complete_dir') %>
+safe_postproc = 0
+cache_dir = cache
+complete_dir = 
 replace_illegal = 1
 par2_multicore = 0
 warned_old_queue = 0
 language = en
 check_new_rel = 1
-enable_https = <%= scope.lookupvar('sabnzbd::params::ssl') %>
-no_dupes = 0
-top_only = 1
+enable_https = 0
+no_dupes = 2
+top_only = 0
 quick_check = 1
 movie_sort_string = ""
-email_from = <%= scope.lookupvar('sabnzbd::params::email_from') %>
+email_from = ""
 movie_extra_folder = 0
-dirscan_script = None
 email_endjob = 0
 tv_categories = ,
-unpack_check = 1
+pause_on_pwrar = 1
 login_realm = SABnzbd
 send_group = 0
 refresh_rate = 0
 movie_categories = movies,
-script_dir = <%= scope.lookupvar('sabnzbd::params::scripts_dir') %>
-email_pwd = <%= scope.lookupvar('sabnzbd::params::email_passwd') %>
+script_dir = 
+email_pwd = ""
 ignore_wrong_unrar = 0
 nice = ""
 enable_movie_sorting = 0
 https_cert = server.cert
 web_dir2 = Mobile
 fail_on_crc = 0
-auto_sort = 0
-dirscan_opts = 3
+nzb_key = 5d66fd0d71dec0145466a7eb078af9cd
+auto_sort = 1
+ampm = 0
 web_dir = Plush
 queue_complete_pers = 0
 enable_tv_sorting = 0
 folder_max_length = 256
-password_file = ""
-ignore_unrar_dates = 0
-never_repair = 0
-pre_script = None
-sfv_check = 1
-email_rss = 0
-allow_streaming = 0
-pause_on_pwrar = 1
-nzb_key = <%= scope.lookupvar('sabnzbd::params::nzb_key') %>
-ampm = 0
-rss_filenames = 0
+win_menu = 1
+movie_rename_limit = 100M
+pre_check = 1
+osx_speed = 1
+quota_period = m
+quota_day = ""
+quota_size = ""
+osx_menu = 1
+wait_ext_drive = 5
+req_completion_rate = 100.2
+fsys_type = 0
+allow_incomplete_nzb = 0
+uniconfig = 1
+randomize_server_ip = 0
+quota_resume = 0
+no_ipv6 = 0
+nomedia_marker = ""
+max_art_opt = 0
+max_art_tries = 3
+start_paused = 0
+https_chain = ""
+history_limit = 50
+show_sysload = 2
+keep_awake = 1
+rss_odd_titles = nzbindex.nl/, nzbindex.com/, nzbclub.com/
+overwrite_files = 0
+local_range = ""
+warn_empty_nzb = 1
+ipv6_servers = 1
+wait_for_dfolder = 0
+fail_hopeless = 1
+prio_sort_list = ,
+news_items = 1
+empty_postproc = 0
+web_watchdog = 0
 [logging]
+log_new = 0
 max_log_size = 5242880
 log_level = 2
 log_backups = 5
 enable_cherrypy_logging = 0
-log_new = 0
 [newzbin]
 username = ""
-https = 1
+url = www.newzbin2.es
 bookmark_rate = 60
-bookmarks = 0
+bookmarks = 1
 password = ""
 unbookmark = 1
-<% if scope.lookupvar('sabnzbd::params::nzbmatrix_username') %>
 [nzbmatrix]
-username = "<%= scope.lookupvar('sabnzbd::params::nzbmatrix_username') %>"
-apikey = "<%= scope.lookupvar('sabnzbd::params::nzbmatrix_apikey') %>"
+username = 
+apikey = 
 del_bookmark = 1
-<% end %>
+[growl]
+growl_enable = 0
+ntfosd_enable = 1
+growl_password = ""
+growl_server = ""
+notify_classes = startup, download, pp, complete, other
+ncenter_enable = 0
+[servers]
+[[secure.Usenetserver.com]]
+username = 
+enable = 1
+name = 
+fillserver = 0
+connections = 20
+ssl = 1
+host = 
+timeout = 120
+password = 
+optional = 0
+port = 443
+retention = 1455
 [categories]
-[[misc]]
-priority = -100
-pp = ""
-name = misc
-script = Default
-newzbin = Misc
-dir = Misc
-[[resources]]
-priority = -100
-pp = ""
-name = resources
-script = Default
-newzbin = Resources
-dir = Resources
-[[apps]]
-priority = -100
-pp = ""
-name = apps
-script = Default
-newzbin = Apps
-dir = Apps
-[[movies]]
-priority = -100
-pp = ""
-name = movies
-script = Default
-newzbin = Movies > SD
-dir = <%= scope.lookupvar('sabnzbd::params::complete_movie_download_dir') %> 
-[[consoles]]
-priority = -100
-pp = ""
-name = consoles
-script = Default
-newzbin = Consoles
-dir = Consoles
-[[books]]
-priority = -100
-pp = ""
-name = books
-script = Default
-newzbin = Books
-dir = Books
-[[games]]
-priority = -100
-pp = ""
-name = games
-script = Default
-newzbin = Games
-dir = Games
-[[anime]]
-priority = -100
-pp = ""
-name = anime
-script = Default
-newzbin = Anime
-dir = Anime
-[[music]]
-priority = -100
-pp = ""
-name = music
-script = Default
-newzbin = Music*
-dir = <%= scope.lookupvar('sabnzbd::params::complete_music_download_dir') %>
-[[pda]]
-priority = -100
-pp = ""
-name = pda
-script = Default
-newzbin = PDA
-dir = PDA
-[[emulation]]
-priority = -100
-pp = ""
-name = emulation
-script = Default
-newzbin = Emulation
-dir = Emulation
-[[unknown]]
-priority = -100
-pp = ""
-name = unknown
-script = Default
-newzbin = Unknown
-dir = Unknown
 [[*]]
 priority = 0
 pp = 3
@@ -218,26 +184,21 @@ name = *
 script = None
 newzbin = ""
 dir = ""
+[[cinematic]]
+priority = 0
+pp = ""
+name = cinematic
+script = Default
+newzbin = "cinematic, movies, cinema"
+dir = movies
 [[tv]]
-priority = -100
+priority = -1
 pp = ""
 name = tv
 script = sabToSickBeard.py
-newzbin = TV
-dir = <%= scope.lookupvar('sabnzbd::params::complete_tv_download_dir') %>
-[servers]
-[[<%= scope.lookupvar('sabnzbd::params::nzb_server') %>]]
-username = <%= scope.lookupvar('sabnzbd::params::nzb_server_username') %>
-enable = 1
-name = <%= scope.lookupvar('sabnzbd::params::nzb_server') %>
-fillserver = 0
-connections = <%= scope.lookupvar('sabnzbd::params::nzb_server_maxconnections') %>
-ssl = <%= scope.lookupvar('sabnzbd::params::nzb_server_ssl') %>
-host = <%= scope.lookupvar('sabnzbd::params::nzb_server') %>
-timeout = 30
-password = <%= scope.lookupvar('sabnzbd::params::nzb_server_passwd') %>
-optional = 0
-port = <%= scope.lookupvar('sabnzbd::params::nzb_server_port') %>
-retention = <%= scope.lookupvar('sabnzbd::params::nzb_server_retention') %>
-[growl]
-growl_enable = 1
+newzbin = tv
+dir = tv
+[rss]
+[nzbxxx]
+username = ""
+apikey = ""
