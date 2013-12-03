@@ -20,7 +20,7 @@ class sabnzbd::config {
         group  => 'sabnzbd',
     }
 
-    file { "${sabnzbd::params::base_dir}/sabnzbd/sabnzbd.ini":
+    file { "${sabnzbd::params::base_dir}/sabnzbd/config/sabnzbd.ini":
         content => template('sabnzbd/sabnzbd.ini.erb'),
         owner   => 'sabnzbd',
         group   => 'sabnzbd',
