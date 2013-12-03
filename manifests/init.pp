@@ -61,18 +61,20 @@ class sabnzbd {
         }
   
     supervisor::service { 'sabnzbd':
-        ensure         => present,
-        enable         => true,
-        stdout_logfile => "${sabnzbd::params::log_dir}/supervisor.log",
-        stderr_logfile => "${sabnzbd::params::log_dir}/supervisor.log",
-        command        => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/python ${sabnzbd::params::base_dir}/sabnzbd/src/SABnzbd.py -f ${sabnzbd::params::base_dir}/sabnzbd/config/sabnzbd.ini",
-        user           => 'sabnzbd',
-        group          => 'sabnzbd',
-        directory      => "${sabnzbd::params::base_dir}/sabnzbd/src/",
-        require        => [Vcsrepo["${sabnzbd::params::base_dir}/sabnzbd/src"],
-          Python::Virtualenv["${venv}"],
-          File["${sabnzbd::params::log_dir}"]
-        ]
+      command        => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/python ${sabnzbd::params::base_dir}/sabnzbd/src/SABnzbd.py -f ${sabnzbd::params::base_dir}/sabnzbd/config/sabnzbd.ini",
+      ensure         => present,
+      enable         => true,
+      
+      stdout_logfile => "${sabnzbd::params::log_dir}/supervisor.log",
+      stderr_logfile => "${sabnzbd::params::log_dir}/supervisor.log",
+      
+      user           => 'sabnzbd',
+      group          => 'sabnzbd',
+      
+      require        => [Vcsrepo["${sabnzbd::params::base_dir}/sabnzbd/src"],
+        Python::Virtualenv["${venv}"],
+        File["${sabnzbd::params::log_dir}"]
+      ]
         
         }
         
