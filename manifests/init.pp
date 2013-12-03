@@ -32,7 +32,7 @@ class sabnzbd {
         ensure  => directory,
         owner   => 'sabnzbd',
         group   => 'sabnzbd',
-        mode    => '0644',
+        mode    => '0744',
         recurse => true
         
         }
