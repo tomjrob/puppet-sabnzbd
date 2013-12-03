@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 2.0.0
+  - ruby-head
 script: "bundle exec rake spec"
 env:
   - PUPPET_VERSION= 3.3.2
