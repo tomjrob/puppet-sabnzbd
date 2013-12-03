@@ -5,6 +5,7 @@ class sabnzbd {
     include git
 
     $package_deps = ['unrar','unzip','p7zip','par2','python-yenc']
+    $venv = "${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"
     package { $package_deps:
         ensure => 'installed'
     }
@@ -24,12 +25,18 @@ class sabnzbd {
         mode    => '0644',
         recurse => true
     }
+    
+    python::pip { $venv:
+        ensure     => 'present',
+        virtualenv => $venv,
+        owner      => 'sabnzbd',
+}
 
-		python::virtualenv { "${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}":
-		    ensure       => present,
-		    owner        => 'sabnzbd',
-		    group        => 'sabnzbd',
-        require      => [Package['python-yenc'],File["${sabnzbd::params::base_dir}/sabnzbd"]]
+    python::virtualenv { $venv:
+        ensure       => present,
+        owner        => 'sabnzbd',
+        group        => 'sabnzbd',
+        require      => File["${sabnzbd::params::base_dir}/sabnzbd"]
 		  }
 
     exec { 'download-sabnzbd':
@@ -45,7 +52,7 @@ class sabnzbd {
         creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/lib/python2.7/site-packages/OpenSSL",
         path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
         user    => 'sabnzbd',
-        require => Python::Virtualenv["${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"];
+        require => [Python::Virtualenv["${venv}"],Python::Pip["${venv}"]];
     }
     exec { 'install-cheetah-sabnzbd':
         command => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/pip install cheetah",
@@ -53,7 +60,7 @@ class sabnzbd {
         creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/cheetah",
         path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
         user    => 'sabnzbd',
-        require => Python::Virtualenv["${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"];
+        require => [Python::Virtualenv["${venv}"],Python::Pip["${venv}"]];
     }
     
     supervisor::service { 'sabnzbd':
