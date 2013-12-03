@@ -3,6 +3,7 @@ class sabnzbd {
     include sabnzbd::params
     include sabnzbd::config
     include git
+    include supervisor
 
     $package_deps = ['unrar','unzip','p7zip','par2','python-yenc']
     $venv = "${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"
@@ -15,7 +16,7 @@ class sabnzbd {
         allowdupe => false,
         shell     => '/bin/bash',
         home      => "${sabnzbd::params::base_dir}/sabnzbd",
-        password  => 'sabnzbd',
+        password  => 'sabnzbd';
     }
 
     file { "${sabnzbd::params::base_dir}/sabnzbd":
@@ -26,17 +27,16 @@ class sabnzbd {
         recurse => true
     }
     
-    python::pip { $venv:
+    python::pip { 'pip':
         ensure     => 'present',
-        virtualenv => $venv,
-        owner      => 'sabnzbd',
 }
 
-    python::virtualenv { $venv:
+    python::virtualenv { "${venv}":
         ensure       => present,
+        systempkgs   => true,
         owner        => 'sabnzbd',
         group        => 'sabnzbd',
-        require      => File["${sabnzbd::params::base_dir}/sabnzbd"]
+        require      => [File["${sabnzbd::params::base_dir}/sabnzbd"],Python::Pip['pip']]
 		  }
 
     exec { 'download-sabnzbd':
@@ -52,7 +52,7 @@ class sabnzbd {
         creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/lib/python2.7/site-packages/OpenSSL",
         path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
         user    => 'sabnzbd',
-        require => [Python::Virtualenv["${venv}"],Python::Pip["${venv}"]];
+        require => [Python::Virtualenv["${venv}"],Python::Pip['pip']];
     }
     exec { 'install-cheetah-sabnzbd':
         command => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/pip install cheetah",
@@ -60,7 +60,7 @@ class sabnzbd {
         creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/cheetah",
         path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
         user    => 'sabnzbd',
-        require => [Python::Virtualenv["${venv}"],Python::Pip["${venv}"]];
+        require => [Python::Virtualenv["${venv}"],Python::Pip['pip']];
     }
     
     supervisor::service { 'sabnzbd':
@@ -72,6 +72,6 @@ class sabnzbd {
         user           => 'sabnzbd',
         group          => 'sabnzbd',
         directory      => "${sabnzbd::params::base_dir}/sabnzbd/src/",
-        require        => Exec['download-sabnzbd'],
+        require        => [Exec['download-sabnzbd'],Python::Pip['pip']];
     }
 }

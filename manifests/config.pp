@@ -26,7 +26,7 @@ class sabnzbd::config {
         group   => 'sabnzbd',
         mode    => '0644',
         require => File["${sabnzbd::params::base_dir}/sabnzbd/config/"],
-        notify  => Service["Supervisor::Service['sabnzbd']"],
+        notify  => Supervisor::Service['sabnzbd'],
     }
 
     file { "${sabnzbd::params::cache_dir}/":
