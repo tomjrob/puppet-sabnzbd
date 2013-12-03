@@ -2,7 +2,7 @@ class sabnzbd {
     include sabnzbd::params
     include sabnzbd::config
       
-    $package_deps = ['unrar','unzip','p7zip','par2','python-yenc', 'libssl-dev']
+    $package_deps = ['git','unrar','unzip','p7zip','par2','python-yenc', 'libssl-dev']
     $pip_deps = ['pyOpenSSL','cheetah']
     $venv = "${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"
 
