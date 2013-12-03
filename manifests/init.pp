@@ -6,8 +6,9 @@ class sabnzbd {
     
     class { 'python':
       pip  => true,
-      virtualenv => true
-    }    
+      virtualenv => true,
+      dev => true,
+      }
       
     $package_deps = ['unrar','unzip','p7zip','par2','python-yenc']
     $venv = "${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"
