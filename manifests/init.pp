@@ -37,7 +37,19 @@ class sabnzbd {
         group        => 'sabnzbd',
         require      => File["${sabnzbd::params::base_dir}/sabnzbd"]
 		  }
-
+    
+    python::pip {'pyOpenSSL':
+        ensure => present,
+        virtualenv => "${venv}",
+        owner => 'sabnzbd',
+    }
+    
+    python::pip {'cheetah':
+        ensure => present,
+        virtualenv => "${venv}",
+        owner => 'sabnzbd',
+    }
+    
     exec { 'download-sabnzbd':
         command => "/usr/bin/git clone ${sabnzbd::params::url} src",
         cwd     => "${sabnzbd::params::base_dir}/sabnzbd",
@@ -45,22 +57,24 @@ class sabnzbd {
         user    => 'sabnzbd',
         require => Class['git'],
     }
-    exec { 'install-pyopenssl':
-        command => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/pip install pyOpenSSL",
-        cwd     => "${sabnzbd::params::base_dir}/sabnzbd/venv",
-        creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/lib/python2.7/site-packages/OpenSSL",
-        path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
-        user    => 'sabnzbd',
-        require => [Python::Virtualenv["${venv}"],Class['python']];
-    }
-    exec { 'install-cheetah-sabnzbd':
-        command => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/pip install cheetah",
-        cwd     => "${sabnzbd::params::base_dir}/sabnzbd/venv",
-        creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/cheetah",
-        path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
-        user    => 'sabnzbd',
-        require => [Python::Virtualenv["${venv}"],Class['python']];
-    }
+    
+
+#    exec { 'install-pyopenssl':
+#        command => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/pip install pyOpenSSL",
+#        cwd     => "${sabnzbd::params::base_dir}/sabnzbd/venv",
+#        creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/lib/python2.7/site-packages/OpenSSL",
+#        path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
+#        user    => 'sabnzbd',
+#        require => [Python::Virtualenv["${venv}"],Class['python']];
+#    }
+#    exec { 'install-cheetah-sabnzbd':
+#        command => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/pip install cheetah",
+#        cwd     => "${sabnzbd::params::base_dir}/sabnzbd/venv",
+#        creates => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin/cheetah",
+#        path    => "${sabnzbd::params::base_dir}/sabnzbd/venv/bin",
+#        user    => 'sabnzbd',
+#        require => [Python::Virtualenv["${venv}"],Class['python']];
+#    }
     
     supervisor::service { 'sabnzbd':
         ensure         => present,
