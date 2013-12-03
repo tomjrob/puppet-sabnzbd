@@ -1,18 +1,17 @@
 class sabnzbd {
     include sabnzbd::params
     include sabnzbd::config
-    
+      
+    $package_deps = ['unrar','unzip','p7zip','par2','python-yenc', 'libssl-dev']
+    $pip_deps = ['pyOpenSSL','cheetah']
+    $venv = "${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"
+
     class { 'python':
       pip  => true,
       virtualenv => true,
       dev => true,
       
       }
-      
-    $package_deps = ['unrar','unzip','p7zip','par2','python-yenc', 'libssl-dev']
-    $pip_deps = ['pyOpenSSL','cheetah']
-    
-    $venv = "${sabnzbd::params::base_dir}/sabnzbd/${sabnzbd::params::venv_dir}"
     
     package { $package_deps:
         ensure => 'installed';
@@ -32,8 +31,7 @@ class sabnzbd {
         ensure  => directory,
         owner   => 'sabnzbd',
         group   => 'sabnzbd',
-        mode    => '0744',
-        recurse => true
+        mode    => '0644',
         
         }
     
@@ -52,20 +50,6 @@ class sabnzbd {
         
         }
         
-#            python::pip {'pyOpenSSL':
-#        ensure => present,
-#        virtualenv => "${venv}",
-#        owner => 'sabnzbd',
-#        
-#        }
-    
-#    python::pip {'cheetah':
-#        ensure => present,
-#        virtualenv => "${venv}",
-#        owner => 'sabnzbd',
-#        
-#        }
-    
    vcsrepo { "${sabnzbd::params::base_dir}/sabnzbd/src":
         ensure => latest,
         provider => git,
