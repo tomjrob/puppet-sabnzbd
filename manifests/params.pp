@@ -3,7 +3,7 @@
 #
 class sabnzbd::params
 {
-    $api_key = hiera('sabnzbd_apikey', '')
+    $api_key = hiera('sabnzbd_apikey', '""')
     $email_to = hiera('email', '')
     $email_account = hiera('email', '')
     $email_server = hiera('email_server', '')
@@ -25,8 +25,8 @@ class sabnzbd::params
     $sabnzbd_host = hiera('sabnzbd_host', 'localhost')
     $sabnzbd_port = hiera('sabnzbd_port', '8080')
     $sabnzbd_webroot = hiera('sabnzbd_webroot', '/sabnzbd')
-    $complete_dir = hiera('complete_download_dir', '')
-    $downloads_dir = hiera('incomplete_download_dir', '')
+    $complete_dir = hiera('complete_download_dir', 'Downloads/complete')
+    $downloads_dir = hiera('incomplete_download_dir', 'Downloads/incomplete')
     $complete_movie_download_dir = hiera('complete_movie_download_dir', 'movies')
     $complete_tv_download_dir = hiera('complete_tv_download_dir', 'tv')
     $complete_music_download_dir = hiera('complete_music_download_dir', 'music')
