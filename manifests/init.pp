@@ -13,8 +13,13 @@ class sabnzbd {
       
       }
     
+    exec { "apt_update":
+      command => 'apt-get -y update'
+    }
+    
     package { $package_deps:
-        ensure => 'installed';
+        ensure => 'installed',
+        require => Exec['apt_update'],
         
         }
 
