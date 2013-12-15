@@ -21,4 +21,4 @@ class sabnzbd (
   class { '::sabnzbd::config': } ~>
   class { '::sabnzbd::service': } ->
   anchor { 'sabnzbd::end': }
-}
+  }

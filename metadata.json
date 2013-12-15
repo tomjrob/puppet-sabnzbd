@@ -6,20 +6,20 @@
   "description": "Install sabnzd, configure your indexes and start downloading nzbs",
   "dependencies": [
     {
-      "name": "puppetlabs/git",
-      "version_requirement": "0.0.3"
-    },
-    {
       "name": "stankevich/python",
-      "version_requirement": "1.2.0"
+      "version_requirement": "1.2.1"
     },
     {
       "name": "guilhermef/supervisor",
       "version_requirement": "0.0.5"
     },
     {
-      "name": "rodjek/logrotate",
-      "version_requirement": "1.1.1"
+      "name": "puppetlabs/vcsrepo",
+      "version_requirement": "0.2.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": "4.1.0"
     }
   ],
   "types": [],
