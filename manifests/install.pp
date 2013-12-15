@@ -4,13 +4,20 @@ class sabnzbd::install inherits sabnzbd {
     ensure    => 'present',
     allowdupe => false,
     shell     => '/bin/bash',
-    home      => '"${base_dir}"/"${user}"',
-    password  => "${user}";
+    system    => true;
+    }
+  
+  # Ensure Directories Exist/Chown/Chmod  
+  file { ["${base_dir}","${log_dir}","${config_dir}"]:
+    ensure => directory,
+    owner  => "${user}",
+    group  => "${group}",
+    mode   => '0644';
   }
   
   # Install Package Dependencies
   exec { "apt_update":
-  command => 'apt-get -y update',
+  command => '/usr/bin/apt-get -y update',
   } ->
   package { $package_deps:
   ensure => 'installed',
@@ -25,7 +32,7 @@ class sabnzbd::install inherits sabnzbd {
   python::virtualenv { "${venv_dir}":
   ensure  => present,
   owner   => "${user}",
-  group   => "${group}",
+  group   => "${group}";
   } ->
   python::pip { $pip_deps:
   ensure     => present,
@@ -41,5 +48,6 @@ class sabnzbd::install inherits sabnzbd {
   revision => master,
   user     => "${user}",
   group    => "${group}",
+  require => File["${base_dir}"];
   }
 }
