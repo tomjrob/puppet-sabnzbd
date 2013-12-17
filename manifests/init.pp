@@ -1,20 +1,23 @@
 class sabnzbd (
-  $base_dir = $sabnzbd::params::base_dir,
-  $url = $sabnzbd::params::url,
-  $service_manage = $sabnzbd::params::service_manage,
-  $service_enable = $sabnzbd::params::service_enable,
-  $service_ensure = $sabnzbd::params::service_ensure,
-  $user = $sabnzbd::params::user,
-  $group = $sabnzbd::params::group,
-) inherits sabnzbd::params {
-
+  $base_dir,
+  $url,
+  $service_manage,
+  $user,
+  $group,
+  $package_deps,
+  $gem_deps
+) {
+  
   validate_absolute_path($base_dir)
   validate_string($url)
   validate_bool($service_manage)
-  validate_bool($service_enable)
-  validate_string($service_ensure)
   validate_string($user)
   validate_string($group)
+  
+  $venv_dir = "${base_dir}/venv"
+  $log_dir = "${base_dir}/log"
+  $config_dir = "${base_dir}/config"
+  $src_dir = "${base_dir}/src"
   
   anchor { 'sabnzbd::begin': } ->
   class { '::sabnzbd::install': } ->

@@ -18,6 +18,8 @@ class sabnzbd::install inherits sabnzbd {
   # Install Package Dependencies
   exec { "apt_update":
   command => '/usr/bin/apt-get -y update',
+  path => "/usr/bin/",
+  onlyif => "test \\( ! -f /var/cache/apt/pkgcache.bin \\) -o \\( ! -z `/usr/bin/find /etc/apt/* -cnewer /var/cache/apt/pkgcache.bin -print -quit` 1> /dev/null 2>/dev/null \\)",
   } ->
   package { $package_deps:
   ensure => 'installed',
@@ -34,7 +36,7 @@ class sabnzbd::install inherits sabnzbd {
   owner   => "${user}",
   group   => "${group}";
   } ->
-  python::pip { $pip_deps:
+  python::pip { $gem_deps:
   ensure     => present,
   virtualenv => "${venv_dir}",
   owner      => "${user}";  
@@ -49,5 +51,9 @@ class sabnzbd::install inherits sabnzbd {
   user     => "${user}",
   group    => "${group}",
   require => File["${base_dir}"];
+  }
+  
+  class { 'supervisor':
+  enable_inet_server => true;
   }
 }

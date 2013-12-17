@@ -1,0 +1,12 @@
+---
+sabnzbd::package_deps:
+  - git
+  - unrar
+  - unzip
+  - p7zip
+  - par2
+  - python-yenc
+  - libssl-dev
+sabnzbd::gem_deps:
+  - pyOpenSSL
+  - cheetah
