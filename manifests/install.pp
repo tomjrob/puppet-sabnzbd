@@ -44,16 +44,12 @@ class sabnzbd::install inherits sabnzbd {
   
   # Get latest Sabnzbd from git source
   vcsrepo { "${src_dir}":
-  ensure   => latest,
+  ensure   => present,
   provider => git,
   source   => "${url}",
   revision => master,
   user     => "${user}",
   group    => "${group}",
   require => File["${base_dir}"];
-  }
-  
-  class { 'supervisor':
-  enable_inet_server => true;
   }
 }

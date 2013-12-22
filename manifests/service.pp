@@ -9,5 +9,10 @@ class sabnzbd::service inherits sabnzbd {
     user           => "${user}",
     group          => "${group}";
     }
+    
+  # Start Supervisor Inet Service
+  class { 'supervisor':
+  enable_inet_server => true;
+  }
   }
 }

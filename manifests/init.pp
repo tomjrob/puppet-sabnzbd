@@ -5,7 +5,17 @@ class sabnzbd (
   $user,
   $group,
   $package_deps,
-  $gem_deps
+  $gem_deps,
+  $port,
+  $host,
+  $pause_on_post_processing,
+  $download_dir,
+  $complete_dir,
+  $script_dir,
+  $api_key,
+  $servers,
+  $categories,
+  $test = '""',
 ) {
   
   validate_absolute_path($base_dir)
