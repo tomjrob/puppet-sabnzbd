@@ -13,213 +13,153 @@ password = <%= server['password'] %>
 optional = <%= server['optional'] %>
 port = <%= server['port'] %>
 retention = <%= server['retention'] %><%- end -%><%- end -%>
-
-<%-categories.each do |category_hashes|
-<%=	["#{category_hashes['name']}"]
-<%-  category_hash_defaults = {"priority" => "0", "pp" => "0", "script" => "None", "newzbin" => '""', "dir" => '""'}
-<%-  category_hashes.each do |k,v|
-<%-    v == "" ? v = category_hash_defaults[k] : false
-<%=    "#{k}=#{v}" %>
-<%-  end -%>
-<%- end if categories -%>
-
-
-require 'yaml'
-
-yaml_str = <<EOS
----
-categories:
-  - name: "*"
-    dir: ""
-    script: "None"
-    priority: "0"
-    pp: "3"
-    newzbin: ""
-  - name: "movies"
-    dir: "movies"
-    script: "Default"
-    priority: "-100"
-    pp: ""
-    newzbin: ""
-  - name: "tv"
-    dir: "tv"
-    script: "sabToSickBeard.py"
-    priority: "-1"
-    pp: ""
-    newzbin: ""
-EOS
-
-yml = YAML.load(yaml_str)
-categories = yml['categories']
-
-@categories.each do |category_hashes|
-  category_hash_defaults = {"priority" => "0", "pp" => "0", "script" => "None", "newzbin" => '""', "dir" => '""'}
-  category_hashes.each_pair do |k,v|
-    unless v == ""
-      local_variable_set(k,v,bind)
-    else
-      local_variable_set(k,category_hash_defaults[k],bind)
-    end
-	puts priority
-    puts pp
-    puts script
-    puts newzbin
-    puts dir
-  end
-end if categories
-
-
-
-
-
-
 [categories]<%- @categories.each do |category| if @categories -%>
 [[<%= category['name'] %>]]
-priority = <%= category['priority'] %>
-pp = <%= category['pp'] %>
+priority = <%= category['priority'] || '""' %>
+pp = <%= category['pp'] || '""' %>
 name = <%= category['name'] %>
-script = <%= category['script'] %>
-newzbin = <%= category["newzbin"] %>
-dir = <%= category['dir'] %><%- end -%><%- end -%>
+script = <%= category['script'] || '""' %>
+newzbin = <%= category["newzbin"] || '""' %>
+dir = <%= category['dir'] || '""' %><%- end -%><%- end -%>
 [misc]
-queue_complete = ""
-https_port = ""
-folder_rename = 0
-allow_64bit_tools = 0
-password_file = ""
-rss_rate = 60
-https_key = ""
-cleanup_list = ,
-cache_limit = ""
-ignore_unrar_dates = 0
-par_option = ""
-web_color = ""
-replace_spaces = 0
-web_color2 = ""
-dirscan_speed = 5
-enable_filejoin = 0
-create_group_folders = 0
-api_key = 5c8e70f3426dfd2c3072b3a2a4c8b242
-never_repair = 0
-no_penalties = 0
-bandwidth_limit = 0
-dirscan_dir = ""
-disable_api_key = 0
-email_to = ,
-rss_filenames = 0
-password = ""
-permissions = 777
-auto_disconnect = 0
-use_pickle = 0
-enable_date_sorting = 0
-replace_dots = 0
-movie_sort_extra = ""
-ionice = ""
-enable_unzip = 0
-download_free = ""
-port = <%= port %>
-email_dir = ""
-pre_script = ""
-email_full = 0
-log_dir = logs
-admin_dir = admin
-nzb_backup_dir = ""
-tv_sort_countries = 1
-date_categories = ""
-ssl_type = ""
-sfv_check = 0
-date_sort_string = ""
-schedlines = ,
-host = 0.0.0.0
-ignore_samples = 0
-enable_tsjoin = 0
-auto_browser = 0
-pause_on_post_processing = 0
-enable_unrar = 0
-email_rss = 0
-email_account = ""
-email_server = ""
-allow_streaming = 0
-config_lock = 0
-api_warnings = 0
-tv_sort_string = ""
-username = ""
-unpack_check = 0
-download_dir = downloads/incomplete
-size_limit = ""
-enable_par_cleanup = 0
-safe_postproc = 0
-cache_dir = cache
-complete_dir = downloads/complete
-replace_illegal = 0
-par2_multicore = 0
-warned_old_queue = 0
-language = ""
-check_new_rel = 1
-enable_https = 0
-no_dupes = 0
-top_only = 0
-quick_check = 0
-movie_sort_string = ""
-email_from = ""
-movie_extra_folder = 0
-email_endjob = 0
-tv_categories = ,
-pause_on_pwrar = 0
-login_realm = ""
-send_group = 0
-refresh_rate = 0
-movie_categories = ,
-script_dir = ""
-email_pwd = ""
-ignore_wrong_unrar = 0
-nice = ""
-enable_movie_sorting = 0
-https_cert = ""
-web_dir2 = ""
-fail_on_crc = 0
-nzb_key = ""
-auto_sort = 0
-ampm = 0
-web_dir = Plush
-queue_complete_pers = 0
-enable_tv_sorting = 0
-folder_max_length = 256
-win_menu = 0
-movie_rename_limit = ""
-pre_check = 0
-osx_speed = 0
-quota_period = ""
-quota_day = ""
-quota_size = ""
-osx_menu = 0
-wait_ext_drive = 5
-req_completion_rate = 100.2
-fsys_type = 0
-allow_incomplete_nzb = 0
-uniconfig = 0
-randomize_server_ip = 0
-quota_resume = 0
-no_ipv6 = 0
-nomedia_marker = ""
-max_art_opt = 0
-max_art_tries = 3
-start_paused = 0
-https_chain = ""
-history_limit = 50
-show_sysload = 2
-keep_awake = 0
-rss_odd_titles = ,
-overwrite_files = 0
-local_range = ""
-warn_empty_nzb = 0
-ipv6_servers = 1
-wait_for_dfolder = 0
-fail_hopeless = 0
-prio_sort_list = ,
-news_items = 0
-empty_postproc = 0
-web_watchdog = 0
+queue_complete = <%= @misc['queue_complete'] || '""' %>
+https_port = <%= @misc['https_port'] || '""' %>
+folder_rename = <%= @misc['folder_rename'] || '0' %>
+allow_64bit_tools = <%= @misc['allow_64bit_tools'] || '0' %>
+password_file = <%= @misc['password_file'] || '""' %>
+rss_rate = <%= @misc['rss_rate'] || '60' %>
+https_key = <%= @misc['https_key'] || '""' %>
+cleanup_list = <%= @misc['cleanup_list'] || ',' %>
+cache_limit = <%= @misc['cache_limit'] || '""' %>
+ignore_unrar_dates = <%= @misc['ignore_unrar_dates'] || '0' %>
+par_option = <%= @misc['par_option'] || '""' %>
+web_color = <%= @misc['web_color'] || '""' %>
+replace_spaces = <%= @misc['replace_spaces'] || '0' %>
+web_color2 = <%= @misc['web_color2'] || '""' %>
+dirscan_speed = <%= @misc['dirscan_speed'] || '5' %>
+enable_filejoin = <%= @misc['enable_filejoin'] || '0' %>
+create_group_folders = <%= @misc['create_group_folders'] || '0' %>
+api_key = <%= @misc['api_key'] || '5c8e70f3426dfd2c3072b3a2a4c8b242' %>
+never_repair = <%= @misc['never_repair'] || '0' %>
+no_penalties = <%= @misc['no_penalties'] || '0' %>
+bandwidth_limit = <%= @misc['bandwidth_limit'] || '0' %>
+dirscan_dir = <%= @misc['dirscan_dir'] || '""' %>
+disable_api_key = <%= @misc['disable_api_key'] || '0' %>
+email_to = <%= @misc['email_to'] || ',' %>
+rss_filenames = <%= @misc['rss_filenames'] || '0' %>
+password = <%= @misc['password'] || '""' %>
+permissions = <%= @misc['permissions'] || '777' %>
+auto_disconnect = <%= @misc['auto_disconnect'] || '0' %>
+use_pickle = <%= @misc['use_pickle'] || '0' %>
+enable_date_sorting = <%= @misc['enable_date_sorting'] || '0' %>
+replace_dots = <%= @misc['replace_dots'] || '0' %>
+movie_sort_extra = <%= @misc['movie_sort_extra'] || '""' %>
+ionice = <%= @misc['ionice'] || '""' %>
+enable_unzip = <%= @misc['enable_unzip'] || '0' %>
+download_free = <%= @misc['download_free'] || '""' %>
+port = <%= @port %>
+email_dir = <%= @misc['email_dir'] || '""' %>
+pre_script = <%= @misc['pre_script'] || 'None' %>
+email_full = <%= @misc['email_full'] || '0' %>
+log_dir = <%= @misc['log_dir'] || 'logs' %>
+admin_dir = <%= @misc['admin_dir'] || 'admin' %>
+nzb_backup_dir = <%= @misc['nzb_backup_dir'] || '""' %>
+tv_sort_countries = <%= @misc['tv_sort_countries'] || '1' %>
+date_categories = <%= @misc['date_categories'] || '""' %>
+ssl_type = <%= @misc['ssl_type'] || 'v23' %>
+sfv_check = <%= @misc['sfv_check'] || '0' %>
+date_sort_string = <%= @misc['date_sort_string'] || '""' %>
+schedlines = <%= @misc['schedlines'] || ',' %>
+host = <%= @host %>
+ignore_samples = <%= @misc['ignore_samples'] || '0' %>
+enable_tsjoin = <%= @misc['enable_tsjoin'] || '0' %>
+auto_browser = <%= @misc['auto_browser'] || '0' %>
+pause_on_post_processing = <%= @misc['pause_on_post_processing'] || '0' %>
+enable_unrar = <%= @misc['enable_unrar'] || '0' %>
+email_rss = <%= @misc['email_rss'] || '0' %>
+email_account = <%= @misc['email_account'] || '""' %>
+email_server = <%= @misc['email_server'] || '""' %>
+allow_streaming = <%= @misc['allow_streaming'] || '0' %>
+config_lock = <%= @misc['config_lock'] || '0' %>
+api_warnings = <%= @misc['api_warnings'] || '0' %>
+tv_sort_string = <%= @misc['tv_sort_string'] || '""' %>
+username = <%= @misc['username'] || '""' %>
+unpack_check = <%= @misc['unpack_check'] || '0' %>
+download_dir = <%= @misc['download_dir'] || 'downloads/incomplete' %>
+size_limit = <%= @misc['size_limit'] || '""' %>
+enable_par_cleanup = <%= @misc['enable_par_cleanup'] || '0' %>
+safe_postproc = <%= @misc['safe_postproc'] || '0' %>
+cache_dir = <%= @misc['cache_dir'] || 'cache' %>
+complete_dir = <%= @misc['complete_dir'] || 'downloads/complete' %>
+replace_illegal = <%= @misc['replace_illegal'] || '0' %>
+par2_multicore = <%= @misc['par2_multicore'] || '0' %>
+warned_old_queue = <%= @misc['warned_old_queue'] || '0' %>
+language = <%= @misc['language'] || '""' %>
+check_new_rel = <%= @misc['check_new_rel'] || '1' %>
+enable_https = <%= @misc['enable_https'] || '0' %>
+no_dupes = <%= @misc['no_dupes'] || '0' %>
+top_only = <%= @misc['top_only'] || '0' %>
+quick_check = <%= @misc['quick_check'] || '0' %>
+movie_sort_string = <%= @misc['movie_sort_string'] || '""' %>
+email_from = <%= @misc['email_from'] || '""' %>
+movie_extra_folder = <%= @misc['movie_extra_folder'] || '0' %>
+email_endjob = <%= @misc['email_endjob'] || '0' %>
+tv_categories = <%= @misc['tv_categories'] || ',' %>
+pause_on_pwrar = <%= @misc['pause_on_pwrar'] || '0' %>
+login_realm = <%= @misc['login_realm'] || '""' %>
+send_group = <%= @misc['send_group'] || '0' %>
+refresh_rate = <%= @misc['refresh_rate'] || '0' %>
+movie_categories = <%= @misc['movie_categories'] || ',' %>
+script_dir = <%= @misc['script_dir'] || '""' %>
+email_pwd = <%= @misc['email_pwd'] || '""' %>
+ignore_wrong_unrar = <%= @misc['ignore_wrong_unrar'] || '0' %>
+nice = <%= @misc['nice'] || '""' %>
+enable_movie_sorting = <%= @misc['enable_movie_sorting'] || '0' %>
+https_cert = <%= @misc['https_cert'] || '""' %>
+web_dir2 = <%= @misc['web_dir2'] || '""' %>
+fail_on_crc = <%= @misc['fail_on_crc'] || '0' %>
+nzb_key = <%= @misc['nzb_key'] || '""' %>
+auto_sort = <%= @misc['auto_sort'] || '0' %>
+ampm = <%= @misc['ampm'] || '0' %>
+web_dir = <%= @misc['web_dir'] || 'Plush' %>
+queue_complete_pers = <%= @misc['queue_complete_pers'] || '0' %>
+enable_tv_sorting = <%= @misc['enable_tv_sorting'] || '0' %>
+folder_max_length = <%= @misc['folder_max_length'] || '256' %>
+win_menu = <%= @misc['win_menu'] || '0' %>
+movie_rename_limit = <%= @misc['movie_rename_limit'] || '""' %>
+pre_check = <%= @misc['pre_check'] || '0' %>
+osx_speed = <%= @misc['osx_speed'] || '0' %>
+quota_period = <%= @misc['quota_period'] || 'm' %>
+quota_day = <%= @misc['quota_day'] || '""' %>
+quota_size = <%= @misc['quota_size'] || '""' %>
+osx_menu = <%= @misc['osx_menu'] || '0' %>
+wait_ext_drive = <%= @misc['wait_ext_drive'] || '5' %>
+req_completion_rate = <%= @misc['req_completion_rate'] || '100.2' %>
+fsys_type = <%= @misc['fsys_type'] || '0' %>
+allow_incomplete_nzb = <%= @misc['allow_incomplete_nzb'] || '0' %>
+uniconfig = <%= @misc['uniconfig'] || '0' %>
+randomize_server_ip = <%= @misc['randomize_server_ip'] || '0' %>
+quota_resume = <%= @misc['quota_resume'] || '0' %>
+no_ipv6 = <%= @misc['no_ipv6'] || '0' %>
+nomedia_marker = <%= @misc['nomedia_marker'] || '""' %>
+max_art_opt = <%= @misc['max_art_opt'] || '0' %>
+max_art_tries = <%= @misc['max_art_tries'] || '3' %>
+start_paused = <%= @misc['start_paused'] || '0' %>
+https_chain = <%= @misc['https_chain'] || '""' %>
+history_limit = <%= @misc['history_limit'] || '50' %>
+show_sysload = <%= @misc['show_sysload'] || '2' %>
+keep_awake = <%= @misc['keep_awake'] || '0' %>
+rss_odd_titles = <%= @misc['rss_odd_titles'] || ',' %>
+overwrite_files = <%= @misc['overwrite_files'] || '0' %>
+local_range = <%= @misc['local_range'] || '""' %>
+warn_empty_nzb = <%= @misc['warn_empty_nzb'] || '0' %>
+ipv6_servers = <%= @misc['ipv6_servers'] || '1' %>
+wait_for_dfolder = <%= @misc['wait_for_dfolder'] || '0' %>
+fail_hopeless = <%= @misc['fail_hopeless'] || '0' %>
+prio_sort_list = <%= @misc['prio_sort_list'] || ',' %>
+news_items = <%= @misc['news_items'] || '0' %>
+empty_postproc = <%= @misc['empty_postproc'] || '0' %>
+web_watchdog = <%= @misc['web_watchdog'] || '0' %>
 [logging]
 log_new = 0
 max_log_size = ""

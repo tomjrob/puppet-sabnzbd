@@ -6,7 +6,9 @@ sabnzbd::package_deps:
   - p7zip
   - par2
   - python-yenc
+  - build-essential
   - libssl-dev
+  - libffi-dev
 sabnzbd::gem_deps:
   - pyOpenSSL
   - cheetah

@@ -8,14 +8,10 @@ class sabnzbd (
   $gem_deps,
   $port,
   $host,
-  $pause_on_post_processing,
-  $download_dir,
-  $complete_dir,
-  $script_dir,
-  $api_key,
-  $servers,
-  $categories,
-  $test = '""',
+  
+  $misc = {},
+  $servers = {},
+  $categories = {},
 ) {
   
   validate_absolute_path($base_dir)
@@ -24,9 +20,10 @@ class sabnzbd (
   validate_string($user)
   validate_string($group)
   
-  $venv_dir = "${base_dir}/venv"
   $log_dir = "${base_dir}/log"
   $config_dir = "${base_dir}/config"
+  
+  $venv_dir = "${base_dir}/venv"
   $src_dir = "${base_dir}/src"
   
   anchor { 'sabnzbd::begin': } ->
