@@ -1,0 +1,9 @@
+---
+sabnzbd::base_dir: /opt/sabnzbd
+sabnzbd::url: https://github.com/sabnzbd/sabnzbd.git
+sabnzbd::service_manage: true
+sabnzbd::user: sabnzbd
+sabnzbd::group: sabnzbd
+
+sabnzbd::port: 8081
+sabnzbd::host: 0.0.0.0
