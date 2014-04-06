@@ -1,11 +1,11 @@
-Puppet module for installing [sabnzbd](http://sabnzbd.org/).
+Puppet module for installing [sickbeard](http://sickbeard.org/).
 
-[![Build Status](https://travis-ci.org/tomo0/puppet-sabnzbd.png?branch=master)](https://travis-ci.org/tomo0/puppet-sabnzbd)
+[![Build Status](https://travis-ci.org/tomo0/puppet-sickbeard.png?branch=master)](https://travis-ci.org/tomo0/puppet-sickbeard)
 
 ## Usage
 
 The module includes a single class:
 
-    include 'sabnzbd'
+    include 'sickbeard'
 
-This installs sabnzbd, along with all required dependencies. If nginx is included in your manifest then it will also create the appropriate configuration. You can also update the sabnzbd config with hiera.
+This installs sickbeard, along with all required dependencies. If nginx is included in your manifest then it will also create the appropriate configuration. You can also update the sickbeard config with hiera.

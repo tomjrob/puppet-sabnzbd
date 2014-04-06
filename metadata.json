@@ -1,7 +1,7 @@
 {
-  "name": "tomo0-sabnzbd",
+  "name": "tomo0-sickbeard",
   "version": "0.0.1",
-  "summary": "Module for installing sabnzbd newsreader",
+  "summary": "Module for installing sickbeard newsreader",
   "author": "Tom Robinson",
   "description": "Install sabnzd, configure your indexes and start downloading nzbs",
   "dependencies": [
@@ -24,7 +24,7 @@
   ],
   "types": [],
   "checksums": {},
-  "source": "https://github.com/tomo0/puppet-sabnzbd.git",
+  "source": "https://github.com/tomo0/puppet-sickbeard.git",
   "project_page": "",
   "license": "Apache License, Version 2.0\u003e0.0.0"
 }

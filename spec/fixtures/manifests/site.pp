@@ -1,4 +1,4 @@
 
 node default {
-    include sabnzbd
+    include sickbeard
 }

@@ -27,6 +27,7 @@ class sabnzbd (
   $src_dir = "${base_dir}/src"
   
   anchor { 'sabnzbd::begin': } ->
+  class { '::sabnzbd::install_deps': } ->
   class { '::sabnzbd::install': } ->
   class { '::sabnzbd::config': } ~>
   class { '::sabnzbd::service': } ->
