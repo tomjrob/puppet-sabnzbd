@@ -12,15 +12,20 @@ timeout = <%= server['timeout'] %>
 password = <%= server['password'] %>
 optional = <%= server['optional'] %>
 port = <%= server['port'] %>
-retention = <%= server['retention'] %><%- end -%><%- end -%>
-[categories]<%- @categories.each do |category| if @categories -%>
+retention = <%= server['retention'] %>
+<%- end -%>
+<%- end -%>
+[categories]
+<%- @categories.each do |category| if @categories -%>
 [[<%= category['name'] %>]]
 priority = <%= category['priority'] || '""' %>
 pp = <%= category['pp'] || '""' %>
 name = <%= category['name'] %>
 script = <%= category['script'] || '""' %>
 newzbin = <%= category["newzbin"] || '""' %>
-dir = <%= category['dir'] || '""' %><%- end -%><%- end -%>
+dir = <%= category['dir'] || '""' %>
+<%- end -%>
+<%- end -%>
 [misc]
 queue_complete = <%= @misc['queue_complete'] || '""' %>
 https_port = <%= @misc['https_port'] || '""' %>
